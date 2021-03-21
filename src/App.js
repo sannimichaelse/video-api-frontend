@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router , Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import Header from "./components/Header";
 import Videos from "./components/Videos";
 import AddVideo from "./components/AddVideo";
 import Footer from "./components/Footer";
-import About from "./components/About";
 
 function App() {
   const [showAddVideo, setShowAddVideo] = useState(false);
@@ -22,14 +21,14 @@ function App() {
 
   // fetch videos
   const fetchVideos = async () => {
-      const res = await fetch('http://localhost:1337/videos');
+      const res = await fetch(`${process.env.REACT_APP_STRAPI_URL}/videos`);
       const data = await res.json();
       return data
   }
 
     // fetch video
   const fetchVideo = async (id) => {
-      const res = await fetch(`http://localhost:5000/tasks/${id}`);
+      const res = await fetch(`${process.env.REACT_APP_STRAPI_URL}/videos/${id}`);
       const data = await res.json();
       return data
   }
@@ -50,7 +49,7 @@ function App() {
       ...videoToToggle, isPublic: !videoToToggle.isPublic
     }
 
-    const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+    const res = await fetch(`${process.env.REACT_APP_STRAPI_URL}/videos/${id}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json'
@@ -66,7 +65,7 @@ function App() {
 
   // Add Task
   const addVideo = async (video) => {
-    const res = await fetch(`http://localhost:1337/videos`, {
+    const res = await fetch(`${process.env.REACT_APP_STRAPI_URL}/videos`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
